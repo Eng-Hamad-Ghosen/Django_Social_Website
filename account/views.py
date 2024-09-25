@@ -5,7 +5,7 @@ from django.contrib.auth.hashers import make_password
 from.forms import UserRegistrationForm
 from . models import Profile
 from django.contrib.auth.decorators import login_required
-
+from django.contrib import messages
 
 # Create your views here.
 
@@ -55,6 +55,9 @@ def edit(request):
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
+            messages.success(request, 'Profile has been updated successfully.')
+        else:
+            messages.error(request, 'Error updaing your profile.')
     else:
         user_form = UserEditForm(instance=request.user)
         profile_form = ProfileEditForm(instance=request.user.profile)
